@@ -1,4 +1,9 @@
 # General
 *.DS_Store
 *Icon
+
+# pre-req
 Py-IBLT*
+
+# compiler file
+*.pyc
