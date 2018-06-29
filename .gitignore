@@ -1,6 +1,8 @@
 # General
 *.DS_Store
 *Icon
+.vscode*
+
 
 # pre-req
 Py-IBLT*
