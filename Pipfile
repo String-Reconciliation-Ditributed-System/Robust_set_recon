@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 scipy = "*"
+pyemd = "*"
+pyqtree = "*"
 
 [dev-packages]
 
