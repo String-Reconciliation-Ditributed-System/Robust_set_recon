@@ -1,6 +1,5 @@
 from iblt import IBLT
 from pyemd import emd, emd_samples
-from pyqtree import Index as qt # quadtree
 from ast import literal_eval
 from itertools import permutations
 import numpy as np
