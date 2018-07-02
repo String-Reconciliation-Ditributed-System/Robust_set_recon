@@ -103,7 +103,9 @@ class data:
                 self.content = np.delete(self.content, np.argwhere(self.content==item))
         else:
             for item in deleting.keys():
-                self.content = np.delete(self.content, np.argwhere(self.content in range(item[1], item[0])))
+                index = np.argwhere(self.content in range(item[0], item[1]))
+                if len(index) > 0:
+                    self.content = np.delete(self.content, index[0])
         return self.content
 
 class quadtree:
@@ -306,19 +308,20 @@ if __name__ == "__main__":
     
     # Toy Example
     Alice = data(np.array([1,2,9,12,33],dtype=float))
-    Bob = data(np.array([1,2,9,10,12,28,30,31],dtype=float))
+    Bob = data(np.array([1,2,9,10,12,28,30],dtype=float))
+    print("Alice: "+str(Alice.content))
+    print("Bob: "+str(Bob.content))
     # random shift
     rag = data.commonrange(Alice,Bob)
-    print "Range: " + str(rag)
+    print "Int Range: " + str(rag)
+    print("Alice Random Shift")
     EPS = Alice.randomshift(rag)
     print "Epsilon: " + str(EPS)
-    Bob.randomshift(rag,EPS)
+
 
     # Building Quadtree
     Aliceqt = quadtree(Alice.content,rag)
-    Bobqt = quadtree(Bob.content,rag)
     Aliceqt.printqt()
-    Bobqt.printqt()
 
     # Insert Every level into IBLT of K size
     kmsgsize = 5
@@ -326,6 +329,13 @@ if __name__ == "__main__":
     aliceiblt.encode(Aliceqt.qtree)
 
     # send aliceiblt over here we evaluate the msg size ------ not done
+    print("Send IBLTs and Eps to Bob")
+    # random shift
+    print("Bob Random Shift based on Eps")
+    Bob.randomshift(rag,EPS)
+    # Building Quadtree
+    Bobqt = quadtree(Bob.content,rag)
+    Bobqt.printqt()
 
     # find symmetrical diff and adjust on Host Bob
     bobadd, aliceadd, isleaf = aliceiblt.decode(Bobqt.qtree)
